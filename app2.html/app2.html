@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TINAXE</title>
+<style>body{margin:0;padding:8px;font-family:sans-serif;background:#f1f5f9}h2{margin:4px;text-align:center;color:#2563eb}input,button{width:100%;padding:8px;margin:3px 0;border-radius:8px;border:1px solid #ccc;font-size:15px;box-sizing:border-box}button{background:#2563eb;color:white;font-weight:bold;border:none;padding:10px}.card{background:white;padding:8px;border-radius:8px;margin:4px 0}</style>
+</head><body>
+<h2>TINAXE Study Group</h2>
+<input id="n" placeholder="Full Name">
+<input id="c" placeholder="Class e.g. 4 External">
+<input id="p" placeholder="Phone">
+<input id="f" type="number" placeholder="Total Fees e.g. 12">
+<button onclick="addStudent()">ADD STUDENT</button>
+<input id="s" placeholder="Search..." oninput="show()">
+<div id="list"></div>
+<script>
+let students=JSON.parse(localStorage.getItem('tinaxe2')||'[]');
+function addStudent(){let name=document.getElementById('n').value.trim();if(!name){alert('Enter Name');return;}students.push({name:name,cls:document.getElementById('c').value,ph:document.getElementById('p').value,fee:document.getElementById('f').value||0});localStorage.setItem('tinaxe2',JSON.stringify(students));document.getElementById('n').value='';document.getElementById('c').value='';document.getElementById('p').value='';document.getElementById('f').value='';alert('Saved! '+name);show();}
+function del(i){if(confirm('Delete?')){students.splice(i,1);localStorage.setItem('tinaxe2',JSON.stringify(students));show();}}
+function show(){let q=(document.getElementById('s').value||'').toLowerCase();let h='';students.forEach((st,i)=>{if(q&&!st.name.toLowerCase().includes(q))return;h+=`<div class="card"><b>${st.name}</b> - ${st.cls} - ${st.ph} - $${st.fee} <button onclick="del(${i})" style="background:red;padding:4px">Delete</button></div>`;});document.getElementById('list').innerHTML=h||'No students yet';}
+show();
+</script></body></html>
