@@ -24,4 +24,4 @@ function addMark(i){let sub=prompt('Subject? e.g. Maths');if(!sub)return;let m=p
 function del(i){if(confirm('Delete '+students[i].name+'?')){students.splice(i,1);save();}}
 function show(){let q=(document.getElementById('s').value||'').toLowerCase();let h='';students.forEach((st,i)=>{if(q&&!st.name.toLowerCase().includes(q))return;let bal=st.fee-st.paid;let avg=st.marks.length?st.marks.join(', '):'No marks yet';h+=`<div class="card"><b>${st.name}</b><br>${st.cls} - ${st.ph}<br>Fees: $${st.fee} | Paid: $${st.paid} | <b>Balance: $${bal}</b><br>Performance: ${avg}<br><button class="small green" onclick="pay(${i})">+ Payment</button> <button class="small orange" onclick="addMark(${i})">+ Mark</button> <button class="small red" onclick="del(${i})">Delete</button></div>`;});document.getElementById('list').innerHTML=h||'No students yet - Add above';}
 show();
-</script></body></html>
+</script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}</script></body></html>
