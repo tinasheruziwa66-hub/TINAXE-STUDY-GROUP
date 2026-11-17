@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TINAXE</title>
+<style>body{margin:0;padding:8px;font-family:sans-serif;background:#f1f5f9}h2{margin:4px;text-align:center;color:#2563eb}input,button{width:100%;padding:8px;margin:3px 0;border-radius:8px;border:1px solid #ccc;font-size:15px;box-sizing:border-box}button{background:#2563eb;color:white;font-weight:bold;border:none}button.small{width:auto;padding:5px 8px;font-size:13px;margin:2px}button.green{background:#16a34a}button.orange{background:#ea580c}button.red{background:red}.card{background:white;padding:10px;border-radius:8px;margin:6px 0}</style>
+</head><body>
+<h2>TINAXE Study Group</h2>
+<input id="n" placeholder="Full Name">
+<input id="c" placeholder="Class e.g. 4 External">
+<input id="p" placeholder="Phone">
+<input id="f" type="number" placeholder="Total Fees e.g. 12">
+<button onclick="addStudent()">ADD STUDENT</button>
+<input id="s" placeholder="Search..." oninput="show()">
+<div id="list"></div>
+<script>
+let students=JSON.parse(localStorage.getItem('tinaxe3')||'[]');
+function save(){localStorage.setItem('tinaxe3',JSON.stringify(students));show();}
+function addStudent(){let name=document.getElementById('n').value.trim();if(!name){alert('Enter Name');return;}students.push({name:name,cls:document.getElementById('c').value,ph:document.getElementById('p').value,fee:Number(document.getElementById('f').value||0),paid:0,marks:[]});document.getElementById('n').value='';document.getElementById('c').value='';document.getElementById('p').value='';document.getElementById('f').value='';save();alert('Saved! '+name);}
+function pay(i){let a=Number(prompt('How much did '+students[i].name+' pay?'));if(!a)return;students[i].paid+=a;save();}
+function addMark(i){let sub=prompt('Subject? e.g. Maths');if(!sub)return;let m=prompt('Mark? e.g. 75');if(!m)return;students[i].marks.push(sub+': '+m+'%');save();}
+function del(i){if(confirm('Delete '+students[i].name+'?')){students.splice(i,1);save();}}
+function show(){let q=(document.getElementById('s').value||'').toLowerCase();let h='';students.forEach((st,i)=>{if(q&&!st.name.toLowerCase().includes(q))return;let bal=st.fee-st.paid;let avg=st.marks.length?st.marks.join(', '):'No marks yet';h+=`<div class="card"><b>${st.name}</b><br>${st.cls} - ${st.ph}<br>Fees: $${st.fee} | Paid: $${st.paid} | <b>Balance: $${bal}</b><br>Performance: ${avg}<br><button class="small green" onclick="pay(${i})">+ Payment</button> <button class="small orange" onclick="addMark(${i})">+ Mark</button> <button class="small red" onclick="del(${i})">Delete</button></div>`;});document.getElementById('list').innerHTML=h||'No students yet - Add above';}
+show();
+</script></body></html>
