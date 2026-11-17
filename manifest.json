@@ -1,1 +1,1 @@
-{"name":"TINAXE Study Group","short_name":"TINAXE","display":"standalone","background_color":"#f1f5f9","theme_color":"#2563eb","start_url":"/TINAXE-STUDY-GROUP/app3.html/app3.html","icons":[{"src":"icon.png","sizes":"512x512","type":"image/png"}]}
+{"name":"TINAXE","short_name":"TINAXE","start_url":"./index.html","display":"standalone","background_color":"#FF6B00","theme_color":"#FF6B00","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3135/3135755.png","sizes":"512x512","type":"image/png"}]}
