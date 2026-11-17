@@ -2,76 +2,130 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FF6B00">
 <title>TINAXE - Super App</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
 <style>
 *{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#FFF7ED;padding:12px;padding-bottom:90px}
-.header{background:#FF6B00;color:white;padding:16px;border-radius:16px;text-align:center;position:sticky;top:0;z-index:10}
-.header h1{margin:0;font-size:30px;letter-spacing:2px}
-.header p{margin:4px 0 0;font-size:12px;opacity:.9}
+body{margin:0;background:#FFF7ED;padding:12px;padding-bottom:100px}
+.header{background:#FF6B00;color:white;padding:18px;border-radius:16px;text-align:center}
+.header h1{margin:0;font-size:32px}
 .tabs{display:flex;gap:8px;margin-top:12px}
-.tabs button{background:white;color:#333;border:1.5px solid #FFE0C2;padding:12px;font-size:14px;font-weight:bold}
+.tabs button{background:white;color:#333;border:2px solid #FF6B00;padding:15px;font-size:16px;font-weight:bold;border-radius:12px}
 .tabs button.active{background:#FF6B00;color:white}
-.card{background:white;padding:14px;border-radius:16px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-input,textarea,select{width:100%;padding:12px;border:1.5px solid #FFE0C2;border-radius:10px;margin-top:8px;font-size:15px;outline:none}
-button{width:100%;padding:13px;background:#FF6B00;color:white;border:none;border-radius:12px;font-size:15px;font-weight:bold;margin-top:8px;cursor:pointer}
-button.small{padding:8px;font-size:12px;margin-top:6px}
+.card{background:white;padding:16px;border-radius:16px;margin-top:12px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+input,textarea,select{width:100%;padding:14px;border:2px solid #FFE0C2;border-radius:10px;margin-top:10px;font-size:16px}
+button{width:100%;padding:15px;background:#FF6B00;color:white;border:none;border-radius:12px;font-size:16px;font-weight:bold;margin-top:10px}
+button.small{padding:10px;font-size:13px;margin-top:8px}
 .row{display:flex;gap:6px}.row button{flex:1}
-.note,.student{background:white;border-radius:14px;padding:13px;margin-top:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:5px solid #FF6B00}
-.note.maths{border-left-color:#2563EB}.note.science{border-left-color:#16A34A}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold;color:white;background:#FF6B00}
-.badge.maths{background:#2563EB}.badge.science{background:#16A34A}
-.meta{font-size:11px;color:#888;margin-top:6px}
-.green{background:#DCFCE7;color:#166534}.red{background:#FEE2E2;color:#DC2626}.orange{background:#FFEDD5;color:#9A3412}
-.sharebar{background:#111;color:white;padding:14px;border-radius:14px;margin-top:12px;text-align:center}
-.sharebar button{background:#25D366}
-.install{background:#111;color:white}
+.item{background:white;border-radius:14px;padding:14px;margin-top:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:5px solid #FF6B00}
+.badge{display:inline-block;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:bold;color:white;background:#FF6B00}
 .hidden{display:none}
+.green{background:#16A34A}.red{background:#DC2626}.black{background:#111}
 </style>
 </head>
 <body>
-<div class="header"><h1>🔥 TINAXE</h1><p>Super App • Notes • Students • Fees • Zimbabwe</p></div>
+<div class="header"><h1>🔥 TINAXE</h1><p>Notes • Students • Fees • Works Offline</p></div>
 <div class="tabs">
-<button id="tNotes" class="active" onclick="showTab('notes')">📝 Notes</button>
-<button id="tStudents" onclick="showTab('students')">👩‍🎓 Students</button>
-<button id="tShare" onclick="showTab('share')">📤 Share</button>
+<button id="b1" class="active" onclick="show('notes')">📝 Notes</button>
+<button id="b2" onclick="show('students')">👩‍🎓 Register</button>
+<button id="b3" onclick="show('share')">📤 Share</button>
 </div>
-<div id="tab-notes">
+
+<div id="notes">
 <div class="card">
-<input id="myName" placeholder="Your Name e.g. Tinashe" oninput="localStorage.setItem('tinaxe_name',this.value)">
-<select id="subject"><option value="Maths">📐 Maths</option><option value="Combined Science">🧪 Combined Science</option></select>
+<input id="myName" placeholder="Your Name e.g. Tinashe">
+<select id="subject"><option>Maths</option><option>Combined Science</option></select>
 <input id="title" placeholder="Title e.g. Quadratic Equations">
 <textarea id="text" rows="3" placeholder="Write your note..."></textarea>
-<button onclick="addNote()">+ ADD NOTE</button>
+<button onclick="addNote()">+ ADD NOTE - SAVE</button>
 </div>
-<div class="row"><button onclick="setFilter('All')">All</button><button onclick="setFilter('Maths')">Maths</button><button onclick="setFilter('Combined Science')">Science</button></div>
 <input id="searchNote" placeholder="🔍 Search notes..." oninput="renderNotes()">
 <div id="listNotes"></div>
 </div>
-<div id="tab-students" class="hidden">
+
+<div id="students" class="hidden">
 <div class="card">
 <input id="sName" placeholder="Full Name e.g. Ethel Muchakanyi">
 <input id="sClass" placeholder="Class e.g. 4 External">
 <input id="sPhone" placeholder="Phone e.g. 0777766402">
 <input id="sFees" type="number" placeholder="Total Fees e.g. 12">
-<button onclick="addStudent()">+ ADD STUDENT</button>
+<button onclick="addStudent()">+ ADD STUDENT TO REGISTER</button>
 </div>
 <input id="searchStudent" placeholder="🔍 Search student..." oninput="renderStudents()">
 <div id="listStudents"></div>
 </div>
-<div id="tab-share" class="hidden">
-<div class="sharebar"><h3 style="margin:0">📤 Share TINAXE</h3><p style="font-size:13px;opacity:.8">Send to friends via WhatsApp, ShareIt, Bluetooth</p><button onclick="shareApp()">📲 SHARE TINAXE NOW</button><button onclick="copyLink()" style="background:white;color:black;margin-top:8px">🔗 COPY LINK</button><p id="linkText" style="font-size:11px;word-break:break-all;margin-top:10px"></p></div>
-<button class="install" id="installBtn" onclick="installApp()">⬇️ INSTALL TINAXE ON THIS PHONE</button>
-<div class="card"><b>How to share with ShareIt:</b><br><br>1. Make APK - file is TINAXE.apk<br>2. Open ShareIt > Send > Select TINAXE.apk<br>3. Friend receives > Tap > Install<br><br><b>How to put on Play Store / Palm Store:</b><br><br>1. Go to <b>appsgeyser.com</b> or <b>webintoapp.com</b><br>2. Paste your GitHub link / Upload this HTML<br>3. Download APK + AAB<br>4. Upload AAB to Play Console ($25) / Palm Store (Free)</div>
+
+<div id="share" class="hidden">
+<div class="card" style="background:#111;color:white;text-align:center">
+<h3>📤 Share TINAXE</h3>
+<p>Send to friends via WhatsApp</p>
+<button onclick="shareApp()" style="background:#25D366">📲 SHARE ON WHATSAPP</button>
+<button onclick="copyLink()" style="background:white;color:black">🔗 COPY LINK</button>
+<p id="linkText" style="font-size:12px;word-break:break-all"></p>
 </div>
+<div class="card"><b>How to Install:</b><br><br>Tap Chrome 3 dots > Add to Home screen > Install.<br>TINAXE will appear like a real app!</div>
+</div>
+
 <script>
-const BASE="https://tinaxe-61ad1-default-rtdb.firebaseio.com";
-let notes={}, students={}, filter="All", deferredPrompt=null;
-document.getElementById('myName').value=localStorage.getItem('tinaxe_name')||"";
-document.getElementById('linkText').innerText="Your Link: "+location.href;
-function showTab(t){['notes','students','share'].forEach(x=>{document.getElementById('tab-'+x).classList.toggle('hidden',x!==t);document.getElementById('t'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('active',x===t);});}
-async function load(){try{notes=await (await fetch(BASE+"/notes.json")).json()||{};}catch(e){}try{students=await (await fetch(BASE+"/students.json")).json()||{};}catch(e){}renderNotes();renderStudents();}
-async function addNote(){const name=document.getElementById('myName').value.trim(),subject=document.getElementById('subject').value,title=document.getElementById('title').value.trim(),text=document.getElementById('text').value.trim();if(!name) return alert("Enter your name!");if(!title||!text) return alert("Fill Title + Note");await fetch(BASE+"/notes.json",{method:"POST",body:JSON.stringify({name,subject,title,text,time:new Date().toLocaleString()})});document.getElementById('title').value="";document.getElementById('text').value="";load();}
-function
+let notes=JSON.parse(localStorage.getItem('tinaxe_notes')||'[]');
+let students=JSON.parse(localStorage.getItem('tinaxe_students')||'[]');
+document.getElementById('linkText').innerText=location.href;
+function show(t){
+['notes','students','share'].forEach(x=>{document.getElementById(x).classList.toggle('hidden',x!==t);});
+document.getElementById('b1').classList.toggle('active',t==='notes');
+document.getElementById('b2').classList.toggle('active',t==='students');
+document.getElementById('b3').classList.toggle('active',t==='share');
+}
+function saveAll(){localStorage.setItem('tinaxe_notes',JSON.stringify(notes));localStorage.setItem('tinaxe_students',JSON.stringify(students));}
+function addNote(){
+let name=document.getElementById('myName').value.trim();
+let title=document.getElementById('title').value.trim();
+let text=document.getElementById('text').value.trim();
+let subject=document.getElementById('subject').value;
+if(!title||!text){alert("Please fill Title + Note");return;}
+notes.unshift({name,subject,title,text,time:new Date().toLocaleString()});
+saveAll();document.getElementById('title').value="";document.getElementById('text').value="";
+renderNotes();alert("✅ Note Saved!");
+}
+function renderNotes(){
+let q=(document.getElementById('searchNote').value||"").toLowerCase();
+let list=document.getElementById('listNotes');list.innerHTML="";
+notes.forEach((n,i)=>{
+if(q && !(n.title+" "+n.text).toLowerCase().includes(q)) return;
+list.innerHTML+=`<div class="item"><span class="badge">${n.subject}</span><h3>${n.title}</h3><p style="white-space:pre-wrap">${n.text}</p><small>By ${n.name} • ${n.time}</small><button class="small red" onclick="delNote(${i})">🗑 Delete</button></div>`;
+});
+if(!list.innerHTML) list.innerHTML="<p style='text-align:center;color:#999'>No notes yet. Add first note above! 📝</p>";
+}
+function delNote(i){if(confirm("Delete?")){notes.splice(i,1);saveAll();renderNotes();}}
+function addStudent(){
+let name=document.getElementById('sName').value.trim();
+let cls=document.getElementById('sClass').value.trim();
+let phone=document.getElementById('sPhone').value.trim();
+let fees=parseFloat(document.getElementById('sFees').value||0);
+if(!name){alert("Enter student name");return;}
+students.unshift({name,cls,phone,fees,paid:0,mark:""});
+saveAll();["sName","sClass","sPhone","sFees"].forEach(id=>document.getElementById(id).value="");
+renderStudents();alert("✅ Student Added to Register!");
+}
+function renderStudents(){
+let q=(document.getElementById('searchStudent').value||"").toLowerCase();
+let list=document.getElementById('listStudents');list.innerHTML="";
+students.forEach((s,i)=>{
+if(q && !(s.name+" "+s.phone).toLowerCase().includes(q)) return;
+let bal=(s.fees||0)-(s.paid||0);
+list.innerHTML+=`<div class="item"><b>${s.name}</b><br>${s.cls} - ${s.phone}<br>Fees: $${s.fees} | Paid: $${s.paid} | <b>Balance: $${bal}</b><br>Mark: ${s.mark||'-'}%<div class="row"><button class="small green" onclick="addPay(${i})">+ Payment</button><button class="small" onclick="addMark(${i})">+ Mark</button><button class="small red" onclick="delStu(${i})">Delete</button></div></div>`;
+});
+if(!list.innerHTML) list.innerHTML="<p style='text-align:center;color:#999'>No students in register yet.</p>";
+}
+function addPay(i){let a=parseFloat(prompt("How much paid?")||0);if(!a) return;students[i].paid+=a;saveAll();renderStudents();}
+function addMark(i){let m=prompt("Mark %? e.g. 86")||"";students[i].mark=m;saveAll();renderStudents();}
+function delStu(i){if(confirm("Delete student?")){students.splice(i,1);saveAll();renderStudents();}}
+function shareApp(){
+let txt="🔥 Download TINAXE - Notes + Register + Fees! "+location.href;
+if(navigator.share){navigator.share({title:"TINAXE",text:txt,url:location.href});}
+else{window.open("https://wa.me/?text="+encodeURIComponent(txt));}
+}
+function copyLink(){navigator.clipboard.writeText(location.href);alert("Link Copied! ✅");}
+renderNotes();renderStudents();
+</script>
+</body>
+</html>
